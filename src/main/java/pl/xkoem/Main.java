@@ -1,5 +1,7 @@
 package pl.xkoem;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -10,8 +12,9 @@ public class Main {
         Container container = new Container(5, zoo.getAmountOfElements(), zoo.getSizeOfElement());
 //        container.addObjectsFromClass(zoo.getElemetsFromClass(1));
         container.addObjectsFromAllClasses(zoo.getElemetsFromAllClasses());
-        container.printContainers();
+//        container.printContainers();
 
+//        System.out.println(Arrays.deepToString(container.returnContainerAsArray(0)));
     }
 
 

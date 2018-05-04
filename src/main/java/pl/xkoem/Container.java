@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Container {
 
-//    List<Double[][]> zooContainers;
     List<ArrayList<ArrayList<Double>>> zooContainers;
     Integer amountOfContainers;
 
@@ -55,4 +54,16 @@ public class Container {
             }
         }
     }
+
+    public Double[][] returnContainerAsArray(int containerNumber) {
+        ArrayList<ArrayList<Double>> container = zooContainers.get(containerNumber);
+        Double[][] arrayContainer = new Double[container.size()][container.get(0).size()];
+        for (int i = 0; i < container.size(); i++) {
+            for (int j = 0; j < container.get(i).size(); j++) {
+                arrayContainer[i][j] = container.get(i).get(j);
+            }
+        }
+        return arrayContainer;
+    }
+
 }
