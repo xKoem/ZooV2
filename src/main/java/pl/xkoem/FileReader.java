@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class FileReader {
 
-     static List<ArrayList<ArrayList<String>>> readFile(String filename) {
+     static List<ArrayList<ArrayList<Double>>> readFile(String filename) {
         Optional<BufferedReader> inputReader = readDataFile(filename);
         if(!inputReader.isPresent()) {
             System.out.println("Cannot read file");
@@ -18,7 +18,7 @@ public class FileReader {
         }
         BufferedReader reader = inputReader.get();
 
-        List<ArrayList<ArrayList<String>>> data = new ArrayList<>();
+        List<ArrayList<ArrayList<Double>>> data = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             data.add(new ArrayList<>());
         }
@@ -28,8 +28,8 @@ public class FileReader {
         do {
             String[] element = textLine.split(",");
             Integer animalClass = Integer.valueOf(element[element.length-1]);
-            ArrayList<String> elementList = new ArrayList<>();
-            elementList.addAll(Arrays.asList(element));
+            ArrayList<Double> elementList = new ArrayList<>();
+            elementList.addAll(Arrays.asList(changeStringArrayToDoubleArray(element)));
 
             data.get(animalClass).add(elementList);
 
@@ -39,6 +39,9 @@ public class FileReader {
         return data;
     }
 
+    private static Double[] changeStringArrayToDoubleArray(String[] strings) {
+         return Arrays.stream(strings).map(Double::valueOf).toArray(Double[]::new);
+    }
 
     private static String readLine(BufferedReader reader) {
          String line = "";
