@@ -15,6 +15,15 @@ class Zoo {
         addAmountOfElementInClass();
         countElements();
         sizeOfElement = animalListGroupByClass.get(1).get(0).size();
+        flatValues();
+    }
+
+    private void flatValues() {
+        for (ArrayList<ArrayList<Double>> groups : animalListGroupByClass) {
+            for (ArrayList<Double> animal: groups) {
+                animal.set(12, animal.get(12)/8);
+            }
+        }
     }
 
     private Double getElementPercentage(int classNumber) {
