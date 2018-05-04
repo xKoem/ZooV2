@@ -23,7 +23,7 @@ public class Container {
         }
     }
 
-    public void addObjectsFromClass(ArrayList<ArrayList<Double>> elemetsFromClass) {
+    private void addObjectsFromClass(ArrayList<ArrayList<Double>> elemetsFromClass) {
         for (int i = 0; i < elemetsFromClass.size(); i++) {
             if (i%amountOfContainers == 0 && elemetsFromClass.size() - i < amountOfContainers) {
                 while (i < elemetsFromClass.size()) {
@@ -36,9 +36,9 @@ public class Container {
         }
     }
 
-    public void addObjectsFromAllClasses(List<ArrayList<ArrayList<Double>>> elemetsFromAllClasses) {
-        for (int i = 0; i < elemetsFromAllClasses.size(); i++) {
-            addObjectsFromClass(elemetsFromAllClasses.get(i));
+    void addObjectsFromAllClasses(List<ArrayList<ArrayList<Double>>> elementsFromAllClasses) {
+        for (ArrayList<ArrayList<Double>> elemetsFromAllClass : elementsFromAllClasses) {
+            addObjectsFromClass(elemetsFromAllClass);
         }
     }
 

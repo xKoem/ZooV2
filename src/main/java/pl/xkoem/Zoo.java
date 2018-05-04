@@ -39,7 +39,7 @@ class Zoo {
 
     private void addAmountOfElementInClass() {
         elementsInClass = new ArrayList<>();
-        elementsInClass.add(0, 0); //adding 0 at 0 position;
+        elementsInClass.add(0, 0);
 
         for (int i = 1; i < animalListGroupByClass.size(); i++) {
             elementsInClass.add(i, getNumberOfItemsInClass(i));
@@ -68,7 +68,7 @@ class Zoo {
         }
     }
 
-    public Integer getAmountOfElements() {
+    Integer getAmountOfElements() {
         return amountOfElements;
     }
 
@@ -76,11 +76,11 @@ class Zoo {
         return animalListGroupByClass.get(i);
     }
 
-    public List<ArrayList<ArrayList<Double>>> getElemetsFromAllClasses() {
+    List<ArrayList<ArrayList<Double>>> getElemetsFromAllClasses() {
         return animalListGroupByClass;
     }
 
-    public Integer getSizeOfElement() {
+    Integer getSizeOfElement() {
         return sizeOfElement;
     }
 }
