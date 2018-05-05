@@ -1,5 +1,7 @@
 package pl.xkoem;
 
+import libsvm.svm_node;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,9 +57,9 @@ public class Container {
         }
     }
 
-    public Double[][] returnContainerAsArray(int containerNumber) {
+    public double[][] returnContainerAsArray(int containerNumber) {
         ArrayList<ArrayList<Double>> container = zooContainers.get(containerNumber);
-        Double[][] arrayContainer = new Double[container.size()][container.get(0).size()];
+        double[][] arrayContainer = new double[container.size()][container.get(0).size()];
         for (int i = 0; i < container.size(); i++) {
             for (int j = 0; j < container.get(i).size(); j++) {
                 arrayContainer[i][j] = container.get(i).get(j);
@@ -66,4 +68,35 @@ public class Container {
         return arrayContainer;
     }
 
+    public double[] getClasses(int containerNumber) {
+        ArrayList<ArrayList<Double>> container = zooContainers.get(containerNumber);
+        double[] classes = new double[container.size()];
+        for (int i = 0; i < container.size(); i++) {
+            int classPosition = container.get(i).size() - 1;
+            classes[i] = container.get(i).get(classPosition);
+        }
+        return classes;
+    }
+
+    public svm_node[][] getNodes(int containerNumber) {
+        ArrayList<ArrayList<Double>> container = zooContainers.get(containerNumber);
+        int elements = container.size();
+        int values = container.get(0).size();
+
+        svm_node[][]gi nodes = new svm_node[elements][values];
+
+        for (int i = 0; i < elements; i++) {
+            for (int j = 0; j < values - 1; j++) {
+                svm_node node = new svm_node();
+                node.index = j + 1;
+                node.value = container.get(i).get(j);
+                nodes[i][j] = node;
+            }
+            svm_node node = new svm_node();
+            node.index = -1;
+            node.value = 0.0;
+            nodes[i][values-1] =node;
+        }
+        return nodes;
+    }
 }
