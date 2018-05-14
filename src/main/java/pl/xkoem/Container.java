@@ -83,19 +83,31 @@ public class Container {
         int elements = container.size();
         int values = container.get(0).size();
 
-        svm_node[][]gi nodes = new svm_node[elements][values];
+        svm_node[][] nodes = new svm_node[elements][values];
 
         for (int i = 0; i < elements; i++) {
+            svm_node[] innerNodes;
+            List<svm_node> nodeList = new ArrayList<svm_node>();
             for (int j = 0; j < values - 1; j++) {
                 svm_node node = new svm_node();
                 node.index = j + 1;
                 node.value = container.get(i).get(j);
-                nodes[i][j] = node;
+               if (node.value != 0) {
+                   nodeList.add(node);
+               }
             }
             svm_node node = new svm_node();
             node.index = -1;
             node.value = 0.0;
-            nodes[i][values-1] =node;
+            nodeList.add(node);
+            int k;
+            for (k = 0; k < nodeList.size(); k++) {
+                nodes[i][k] = nodeList.get(k);
+            }
+            for (k = k; k < values; k++ ) {
+                nodes[i][k] = node;
+            }
+
         }
         return nodes;
     }
