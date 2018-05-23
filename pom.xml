@@ -14,6 +14,7 @@
         <testng.version>6.14.3</testng.version>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
     </properties>
 
     <build>
@@ -40,21 +41,27 @@
                     </archive>
                 </configuration>
             </plugin>
-
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${exec-maven-plugin.version}</version>
+                <configuration>
+                    <mainClass>pl.xkoem.Main</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>nz.ac.waikato.cms.weka</groupId>-->
-            <!--<artifactId>weka-stable</artifactId>-->
-            <!--<version>3.8.0</version>-->
-        <!--</dependency>-->
-
         <dependency>
-            <groupId>tw.edu.ntu.csie</groupId>
-            <artifactId>libsvm</artifactId>
-            <version>3.17</version>
+            <groupId>com.github.chen0040</groupId>
+            <artifactId>java-libsvm</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.chen0040</groupId>
+            <artifactId>java-data-frame</artifactId>
+            <version>1.0.11</version>
         </dependency>
 
         <dependency>

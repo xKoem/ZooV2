@@ -1,53 +1,65 @@
 package pl.xkoem;
 
-import libsvm.*;
+import com.github.chen0040.data.evaluators.ClassifierEvaluator;
+import com.github.chen0040.data.frame.DataFrame;
+import com.github.chen0040.data.frame.DataQuery;
+import com.github.chen0040.data.frame.DataRow;
+import com.github.chen0040.data.utils.TupleTwo;
+import com.github.chen0040.svmext.classifiers.OneVsOneSVC;
 
-import static libsvm.svm.svm_train;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class Main {
     public static void main(String[] args) {
+        InputStream irisStream = null;
+        try {
+            irisStream = new FileInputStream("/Users/koem/IdeaProjects/ZooV2/src/main/resources/zoo.data");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        DataFrame irisData = DataQuery.csv(",", false)
+                .from(irisStream)
+                .selectColumn(0).asNumeric().asInput("0")
+                .selectColumn(1).asNumeric().asInput("1")
+                .selectColumn(2).asNumeric().asInput("2")
+                .selectColumn(3).asNumeric().asInput("3")
+                .selectColumn(4).asCategory().asOutput("4")
+                .selectColumn(5).asCategory().asOutput("5")
+                .selectColumn(6).asCategory().asOutput("6")
+                .selectColumn(7).asCategory().asOutput("7")
+                .selectColumn(8).asCategory().asOutput("8")
+                .selectColumn(9).asCategory().asOutput("9")
+                .selectColumn(10).asCategory().asOutput("10")
+                .selectColumn(11).asCategory().asOutput("11")
+                .selectColumn(12).asCategory().asOutput("12")
+                .selectColumn(13).asCategory().asOutput("13")
+                .selectColumn(14).asCategory().asOutput("14")
+                .selectColumn(15).asCategory().asOutput("15")
+                .selectColumn(16).asCategory().asOutput("16")
+                .build();
 
-        Zoo zoo = new Zoo("/Users/koem/IdeaProjects/ZooV2/src/main/resources/zoo.data");
-        zoo.printItemsInClass();
-//        zoo.printAllValues();
+        TupleTwo<DataFrame, DataFrame> parts = irisData.shuffle().split(0.7);
 
-        Container container = new Container(4, zoo.getAmountOfElements(), zoo.getSizeOfElement());
-//        container.addObjectsFromClass(zoo.getElemetsFromClass(1));
-        container.addObjectsFromAllClasses(zoo.getElemetsFromAllClasses());
-//        container.printContainers();
+        DataFrame trainingData = parts._1();
+        DataFrame crossValidationData = parts._2();
 
-        svm_node[][] nodes = container.getNodes(0);
+        OneVsOneSVC multiClassClassifier = new OneVsOneSVC();
+        multiClassClassifier.fit(trainingData);
 
-        for (svm_node[] nodeList: nodes) {
-            for (svm_node node : nodeList) {
-                System.out.print(" " + node.index + " " + node.value);
-            }
-            System.out.print("\n");
+
+        ClassifierEvaluator evaluator = new ClassifierEvaluator();
+
+        for(DataRow dataRow: crossValidationData.rows()) {
+            String predicted = multiClassClassifier.classify(dataRow);
+            String actual = dataRow.categoricalTarget();
+            System.out.println("predicted: " + predicted + "\tactual: " + actual);
+            evaluator.evaluate(actual, predicted);
         }
 
-        svm_problem problem = new svm_problem();
-        problem.y = container.getClasses(0);
-        problem.l = 16;//container.getClasses(0).length;
-        problem.x = container.getNodes(0);
+        evaluator.report();
 
-
-        svm_parameter parameter = new svm_parameter();
-        parameter.kernel_type = 2;
-        parameter.gamma = 0.01;
-        parameter.svm_type = 1;
-        parameter.nu = 0.5;
-
-        svm_model model = svm_train(problem, parameter);
-
-//        node[][] nodes = container.getNodes(0)[0])
-//        System.out.println("predict: " + svm.svm_predict(model,);
-//        svm.
-
-//        System.out.println(model.l);
-
-
-
-        //System.out.println(Arrays.deepToString(container.returnContainerAsArray(0)));
     }
 
 
