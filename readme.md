@@ -39,7 +39,7 @@ Macierz pomyłek:
 6| 0  0  0  0  0  8  0
 7| 0  0  0  0  0  3  7
 ```
-Gdzie w numery kolumn oznaczaja oczekiwany wynik a nr wiersza oznacza ten który dostaliśmy
+Gdzie w numery wierszy oznaczaja oczekiwany wynik a nr kolumny oznacza ten który dostaliśmy
 
 **Dane**
 -
