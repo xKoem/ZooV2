@@ -1,0 +1,14 @@
+#!/bin/zsh
+gamma=$1
+nu=$2
+sum=0
+for i in 1 2 3 4; do
+	java -classpath libsvm.jar svm_train -s 1 -g $gamma -n $nu ../../test$i/train.data ../../test$i/trainoutput > /dev/null 
+	output="$(java -classpath libsvm.jar svm_predict ../../test$i/test.data ../../test$i/trainoutput ../../test$i/output)"
+	output=${output#* = }
+	output=${output%\%*}
+	((sum+=$output))
+done
+
+echo gamma: $gamma nu: $nu $((sum/4))
+

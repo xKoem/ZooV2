@@ -4,13 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 public class FileReader {
 
-     static List<ArrayList<ArrayList<Double>>> readFile(String filename) {
+     static List<Integer> readFile(String filename) {
         Optional<BufferedReader> inputReader = readDataFile(filename);
         if(!inputReader.isPresent()) {
             System.out.println("Cannot read file");
@@ -18,29 +17,14 @@ public class FileReader {
         }
         BufferedReader reader = inputReader.get();
 
-        List<ArrayList<ArrayList<Double>>> data = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            data.add(new ArrayList<>());
-        }
-
+        List<Integer> data = new ArrayList<>();
         String textLine = readLine(reader);
-
         do {
-            String[] element = textLine.split(",");
-            Integer animalClass = Integer.valueOf(element[element.length-1]);
-            ArrayList<Double> elementList = new ArrayList<>();
-            elementList.addAll(Arrays.asList(changeStringArrayToDoubleArray(element)));
-
-            data.get(animalClass).add(elementList);
-
+            data.add(Integer.valueOf(textLine));
             textLine = readLine(reader);
         } while (textLine != null);
 
         return data;
-    }
-
-    private static Double[] changeStringArrayToDoubleArray(String[] strings) {
-         return Arrays.stream(strings).map(Double::valueOf).toArray(Double[]::new);
     }
 
     private static String readLine(BufferedReader reader) {

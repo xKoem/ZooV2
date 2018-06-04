@@ -1,55 +1,27 @@
 package pl.xkoem;
 
-import libsvm.*;
-
-import static libsvm.svm.svm_train;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        List<Integer> predictedValues = FileReader.readFile("libsvm/libsvm-3.22/java/predictedValues");
+        List<Integer> correctValues = FileReader.readFile("libsvm/libsvm-3.22/java/correctValues");
 
-        Zoo zoo = new Zoo("/Users/koem/IdeaProjects/ZooV2/src/main/resources/zoo.data");
-        zoo.printItemsInClass();
-//        zoo.printAllValues();
+        printValues(predictedValues, correctValues);
 
-        Container container = new Container(4, zoo.getAmountOfElements(), zoo.getSizeOfElement());
-//        container.addObjectsFromClass(zoo.getElemetsFromClass(1));
-        container.addObjectsFromAllClasses(zoo.getElemetsFromAllClasses());
-//        container.printContainers();
+        MistakeArray mistakeArray = new MistakeArray(7);
+        mistakeArray.buildArray(correctValues, predictedValues);
 
-        svm_node[][] nodes = container.getNodes(0);
+        mistakeArray.printArray();
 
-        for (svm_node[] nodeList: nodes) {
-            for (svm_node node : nodeList) {
-                System.out.print(" " + node.index + " " + node.value);
-            }
-            System.out.print("\n");
-        }
-
-        svm_problem problem = new svm_problem();
-        problem.y = container.getClasses(0);
-        problem.l = 16;//container.getClasses(0).length;
-        problem.x = container.getNodes(0);
-
-
-        svm_parameter parameter = new svm_parameter();
-        parameter.kernel_type = 2;
-        parameter.gamma = 0.01;
-        parameter.svm_type = 1;
-        parameter.nu = 0.5;
-
-        svm_model model = svm_train(problem, parameter);
-
-//        node[][] nodes = container.getNodes(0)[0])
-//        System.out.println("predict: " + svm.svm_predict(model,);
-//        svm.
-
-//        System.out.println(model.l);
-
-
-
-        //System.out.println(Arrays.deepToString(container.returnContainerAsArray(0)));
     }
 
-
-
+    private static void printValues(List<Integer> predictedValues, List<Integer> correctValues) {
+        System.out.print("Expected: ");
+        correctValues.forEach(System.out::print);
+        System.out.println();
+        System.out.print("Actual:   ");
+        predictedValues.forEach(System.out::print);
+        System.out.println();
+    }
 }
