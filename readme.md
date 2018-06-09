@@ -1,3 +1,6 @@
+**Link do projektu**
+http://archive.ics.uci.edu/ml/datasets/Zoo
+
 **Jak uruchomić?**
 -
 Wszystkie skrypty zsh należy uruchamiać będąc w katalogu libsvm/libsvm-3.22/java
