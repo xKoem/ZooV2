@@ -28,6 +28,8 @@ Znalezione najlepsze gamma i nu:
 gamma: 0.0008 nu: 0.17 95.330459770114942
 ```
 
+Dla testowania zbiorów uczących skuteczność wynosi zawsze 100%
+
 Macierz pomyłek:
 ```
  __1__2__3__4__5__6__7
